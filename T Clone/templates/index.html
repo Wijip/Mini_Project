@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twitter Clone - Home</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Twitter Clone</h1>
+    </header>
+    <div class="content">
+        <h2>Selamat Datang, {{ user }}!</h2>
+        <div class="navigation">
+            <a href="/tweet" class="btn">Buat Tweet</a>
+            <a href="/logout" class="btn danger">Logout</a>
+        </div>
+        <div class="feed">
+            <h2>Beranda</h2>
+            <ul class="tweets">
+                {% for tweet in tweets %}
+                    <li>
+                        <span class="tweet-user">{{ tweet.user }}</span>
+                        <p class="tweet-content">{{ tweet.content }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
