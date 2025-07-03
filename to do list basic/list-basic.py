@@ -18,13 +18,11 @@ class ToDoApp:
     def __init__(self, root):
         self.root = root
         self.root.title("To-Do List Murid")
-        self.tasks = []  # list of dicts: {frame,var,name,prog}
+        self.tasks = []
 
-        # container untuk tabel
         self.container = tk.Frame(root)
         self.container.pack(padx=10, pady=10, fill="x")
 
-        # header tabel
         hdr = tk.Frame(self.container)
         hdr.pack(fill="x")
         tk.Label(hdr, text="", width=4).grid(row=0, column=0)
@@ -32,10 +30,8 @@ class ToDoApp:
         tk.Label(hdr, text="Program", width=20).grid(row=0, column=2)
         tk.Label(hdr, text="Action",  width=20).grid(row=0, column=3)
 
-        # tombol tambah
         tk.Button(root, text="Tambah", command=self.add_task_dialog).pack(pady=(0,10))
 
-        # load existing tasks
         self.load_tasks()
 
     def load_tasks(self):
@@ -111,12 +107,10 @@ class ToDoApp:
         if not t:
             return
 
-        # catat selesai
         with open(FILE_SELESAI, "a") as f:
             f.write(f"{timestamp()} | {t['name']} | {t['prog']}\n")
         log_action("selesai", t["name"], t["prog"])
 
-        # hapus dari UI & list
         frame.destroy()
         self.tasks.remove(t)
         self.save_all_tasks()
@@ -136,7 +130,6 @@ class ToDoApp:
         if not t:
             return
 
-        # dialog edit
         new_name = simpledialog.askstring("Edit Nama", "Nama baru:", initialvalue=t["name"])
         if not new_name:
             return
@@ -144,13 +137,12 @@ class ToDoApp:
         if not new_prog:
             return
 
-        # update UI
         t["widgets"][0].config(text=new_name)
         t["widgets"][1].config(text=new_prog)
         old = (t["name"], t["prog"])
         t["name"], t["prog"] = new_name, new_prog
 
-        log_action("edit", f"{old[0]} → {new_name}", f"{old[1]}→{new_prog}")
+        log_action("edit", f"{old[0]} → {new_name}", f"{old[1]} → {new_prog}")
         self.save_all_tasks()
 
 if __name__ == "__main__":
